@@ -1,0 +1,112 @@
+/* === Base Styling === */
+body {
+  background-color: #0d1117;
+  color: #e6edf3;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* === Card Styling (Vault Entries) === */
+.card, .entry-card {
+  background-color: #161b22;
+  color: #e6edf3;
+  border-radius: 0.5rem;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+
+.card:hover, .entry-card:hover {
+  transform: scale(1.02);
+  border: 1px solid #ff4d4d;
+}
+
+/* === Credential Content Reveal === */
+.actual-content {
+  font-weight: bold;
+  color: #00ff00;
+}
+
+/* === Avatar Styling === */
+img.rounded-circle {
+  border: 2px solid #dc3545;
+}
+
+/* === Auth Wrapper === */
+.auth-wrapper {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.auth-box {
+  background-color: #1e1e1e;
+  color: white;
+  padding: 2rem;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 400px;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.2);
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+/* === Light & Dark Mode === */
+.auth-wrapper.dark-mode {
+  background-color: #121212;
+  color: white;
+}
+
+.auth-wrapper.light-mode {
+  background-color: #f0f0f0;
+  color: #212529;
+}
+
+.auth-wrapper.light-mode .auth-box {
+  background-color: white;
+  color: #212529;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+}
+
+/* === Toggle Button === */
+#modeToggle {
+  filter: drop-shadow(0 0 5px crimson);
+  transition: transform 0.3s ease;
+}
+
+#modeToggle:hover {
+  transform: rotate(10deg) scale(1.1);
+}
+
+/* === Form Toggle Button === */
+.auth-toggle button {
+  width: 100%;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+/* === Animations === */
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animated {
+  animation-duration: 0.5s;
+  animation-fill-mode: both;
+}
+
+.fadeInDown {
+  animation-name: fadeInDown;
+}
+
+.auth-logo {
+  max-width: 180px;
+  height: auto;
+  filter: drop-shadow(0 0 6px crimson);
+  animation: fadeInDown 0.7s ease-in-out;
+}

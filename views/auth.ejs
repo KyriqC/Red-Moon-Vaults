@@ -1,0 +1,72 @@
+<%- include('./partials/header') %>
+
+<div class="auth-wrapper dark-mode">
+  <div class="auth-box">
+    <!-- Logo -->
+<div class="text-center mb-3">
+  <img src="/images/red-moon-logo.png" alt="Red Moon Vaults Logo" class="auth-logo">
+</div>
+
+    <!-- Toggle Button with Moon Icon -->
+    <div class="text-center mb-4">
+      <img id="moonToggle" src="/images/red-moon.png" width="40" style="cursor: pointer; filter: drop-shadow(0 0 6px red);" onclick="toggleMode()">
+    </div>
+
+    <!-- Flash Messages -->
+    <% if (error) { %>
+      <div class="alert alert-danger alert-dismissible fade show">
+        <%= error %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+    <% if (success) { %>
+      <div class="alert alert-success alert-dismissible fade show">
+        <%= success %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+      </div>
+    <% } %>
+
+    <!-- Login Form -->
+    <form id="loginForm" action="/login" method="POST">
+      <h2 class="text-danger text-center">Login</h2>
+      <input type="text" name="username" class="form-control mb-3" placeholder="Username" required>
+      <input type="password" name="password" class="form-control mb-3" placeholder="Password" required>
+      <button type="submit" class="btn btn-danger w-100">Login</button>
+    </form>
+
+    <!-- Register Form -->
+    <form id="registerForm" action="/register" method="POST" class="d-none">
+      <h2 class="text-primary text-center">Register</h2>
+      <input type="text" name="username" class="form-control mb-3" placeholder="Choose Username" required>
+      <input type="password" name="password" class="form-control mb-3" placeholder="Choose Password" required>
+      <button type="submit" class="btn btn-primary w-100">Register</button>
+    </form>
+  </div>
+</div>
+
+<script>
+  function toggleMode() {
+    const wrapper = document.querySelector('.auth-wrapper');
+    const loginForm = document.getElementById('loginForm');
+    const registerForm = document.getElementById('registerForm');
+    const moon = document.getElementById('moonToggle');
+
+    if (wrapper.classList.contains('dark-mode')) {
+      wrapper.classList.remove('dark-mode');
+      wrapper.classList.add('light-mode');
+      loginForm.classList.add('d-none');
+      registerForm.classList.remove('d-none');
+      moon.src = '/images/white-moon.png';
+      moon.style.filter = 'drop-shadow(0 0 6px blue)';
+    } else {
+      wrapper.classList.add('dark-mode');
+      wrapper.classList.remove('light-mode');
+      loginForm.classList.remove('d-none');
+      registerForm.classList.add('d-none');
+      moon.src = '/images/red-moon.png';
+      moon.style.filter = 'drop-shadow(0 0 6px red)';
+    }
+  }
+</script>
+
+<%- include('./partials/footer') %>

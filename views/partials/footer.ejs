@@ -1,0 +1,41 @@
+  <footer class="text-center text-secondary py-4 mt-5 border-top">
+    <small>&copy; <%= new Date().getFullYear() %> SecureVault – A Project by Kyriq Cole</small>
+  </footer>
+
+  <!-- Bootstrap Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Reveal hidden credential content on click
+      document.querySelectorAll('.reveal-text').forEach(el => {
+        el.addEventListener('click', () => {
+          el.classList.add('d-none');
+          const reveal = el.nextElementSibling;
+          if (reveal) reveal.classList.remove('d-none');
+        });
+      });
+
+      // Toggle edit form using data-index attribute
+      document.querySelectorAll('.edit-toggle').forEach(button => {
+        button.addEventListener('click', () => {
+          const index = button.getAttribute('data-index');
+          const form = document.getElementById(`editForm-${index}`);
+          if (form) form.classList.toggle('d-none');
+        });
+      });
+    });
+  </script>
+  
+<script>
+  setTimeout(() => {
+    const alert = document.querySelector('.alert');
+    if (alert) {
+      const bsAlert = new bootstrap.Alert(alert);
+      bsAlert.close();
+    }
+  }, 4000); // Adjust duration if needed
+</script>
+
+</body>
+</html>

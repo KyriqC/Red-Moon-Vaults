@@ -1,0 +1,92 @@
+<%- include('./partials/header') %>
+
+<div class="container py-4" style="max-width: 1140px; margin: auto;">
+  <!-- Header + Logout -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <div class="d-flex align-items-center">
+      <img src="<%= avatarUrl %>" class="rounded-circle me-3" width="50" height="50" alt="Avatar">
+      <div>
+        <h4 class="text-danger mb-0">Welcome, <%= username %></h4>
+        <h5 class="text-light">Your SecureVault</h5>
+      </div>
+    </div>
+    <a href="/logout" class="btn btn-outline-danger">Logout</a>
+  </div>
+
+  <!-- Flash Messages -->
+  <% if (success) { %>
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+      <%= success %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% } %>
+  <% if (error) { %>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+      <%= error %>
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+  <% } %>
+
+  <!-- Add Entry Form -->
+  <form action="/add" method="POST" class="row g-3 mb-5">
+    <div class="col-md-4">
+      <input type="text" name="title" class="form-control" placeholder="Title (e.g., Bank Login)" required>
+    </div>
+    <div class="col-md-4">
+      <input type="text" name="content" class="form-control" placeholder="Username / Password" required>
+    </div>
+    <div class="col-md-4 d-grid">
+      <button type="submit" class="btn btn-outline-danger fw-bold">➕ Add Credential</button>
+    </div>
+  </form>
+
+  <!-- Credential Vault Cards -->
+  <div class="row row-cols-1 row-cols-md-2 g-4">
+    <% entries.forEach((entry, index) => { %>
+      <div class="col">
+        <div class="card entry-card shadow-sm h-100 p-3">
+          <div class="card-body">
+            <h5 class="card-title fw-bold"><%= entry.title %></h5>
+            <p class="card-text text-muted reveal-text" style="cursor: pointer;">Click to reveal</p>
+            <p class="card-text d-none actual-content"><%= entry.content %></p>
+
+            <!-- Edit / Delete Buttons -->
+            <div class="d-flex gap-2 mt-3">
+              <button class="btn btn-sm btn-outline-warning" type="button" onclick="toggleEdit('<%= index %>')">✏️ Edit</button>
+              <form action="/delete" method="POST" class="m-0">
+                <input type="hidden" name="index" value="<%= index %>">
+                <button class="btn btn-sm btn-outline-secondary" type="submit">🗑️ Delete</button>
+              </form>
+            </div>
+
+            <!-- Edit Form -->
+            <form id="editForm-<%= index %>" action="/edit" method="POST" class="d-none mt-3">
+              <input type="hidden" name="index" value="<%= index %>">
+              <input type="text" name="newTitle" class="form-control mb-2" value="<%= entry.title %>" required>
+              <input type="text" name="newContent" class="form-control mb-2" value="<%= entry.content %>" required>
+              <button type="submit" class="btn btn-sm btn-success">💾 Save</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal-text').forEach(el => {
+      el.addEventListener('click', () => {
+        el.classList.add('d-none');
+        el.nextElementSibling.classList.remove('d-none');
+      });
+    });
+  });
+
+  function toggleEdit(index) {
+    const form = document.getElementById(`editForm-${index}`);
+    if (form) form.classList.toggle('d-none');
+  }
+</script>
+
+<%- include('./partials/footer') %>
